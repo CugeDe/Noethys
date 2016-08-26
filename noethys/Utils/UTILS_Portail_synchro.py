@@ -665,7 +665,11 @@ class Synchro():
         # Commit
         self.log.EcritLog(_(u"Enregistrement des données à exporter..."))
         self.Pulse_gauge()
-        session.commit()
+        try:
+            session.commit()
+        except Exception as e:
+            self.log.EcritLog(_(u"Erreur: %s") % e)
+            return False
 
         # Compression du fichier
         self.log.EcritLog(_(u"Compression du fichier d'export..."))
